@@ -6,16 +6,23 @@ Hitorial de uaurio de Manuales frecuentes
 Como cliente, quiero en la página web una opción para descargar manuales.
 
 Requerimientos:
+
 El sistema debe mostrar un botón para poder descargar
+
 El sistema debe tener una opción para seleccionar formato y calidad
+
 El sistema debe guardar registrar un historial de descargas
 
 
 2 ) VISUALIZAR MANUALES
 Como cliente, quiero poder previsualizar el contenido del manual antes de descargarlo para asegurarse de que es el que necesito.
+
 Requerimientos:
+
 El sistema debe mostrar una vista previa del contenido a descargar
+
 El sistema debe tener un apartado para poder hacer vistas previas
+
 El sistema no debe descargar los manuales automáticamente
 
 
