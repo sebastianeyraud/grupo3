@@ -4,6 +4,7 @@ Hitorial de uaurio de Manuales frecuentes
 
 1 ) DESCARGAR MANUALES
 Como cliente, quiero en la página web una opción para descargar manuales.
+
 Requerimientos:
 El sistema debe mostrar un botón para poder descargar
 El sistema debe tener una opción para seleccionar formato y calidad
