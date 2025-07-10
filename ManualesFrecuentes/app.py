@@ -11,6 +11,11 @@ def inicio():
 def despedida():
     return '<h1>¡Hasta la próxima!</h1><p>Gracias por visitar.</p>'
 
+@app.route('/info')
+def informacion():
+    return '<h1>Información del Proyecto</h1><p>Este es un proyecto para practicar el flujo de Git.</p>'
+
+
 # --- FIN DEL ESPACIO ---
 
 if __name__ == '__main__':
