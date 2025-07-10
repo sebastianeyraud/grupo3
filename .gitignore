@@ -1,0 +1,1 @@
+__pycache__/  echo *.pyc  echo *.pyo  echo db.sqlite3  echo .vscode/ 
