@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Catálogo</title>
+    <style>
+        .manuales { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        .manual { border: 1px solid #ccc; padding: 10px; text-align: center; }
+        .filtros { margin-bottom: 10px; }
+        .filtros button { margin-right: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Electrodomésticos</h1>
+
+    <form method="get">
+        <input type="text" name="q" placeholder="Buscar..." value="{{ busqueda_actual }}">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <div class="filtros">
+        <form method="get" style="display:inline;">
+            <input type="hidden" name="categoria" value="Notebook">
+            <button type="submit" {% if filtro_actual == "Notebook" %}style="font-weight:bold;"{% endif %}>Notebook</button>
+        </form>
+        <form method="get" style="display:inline;">
+            <input type="hidden" name="categoria" value="Consolas">
+            <button type="submit" {% if filtro_actual == "Consolas" %}style="font-weight:bold;"{% endif %}>Consolas</button>
+        </form>
+        <form method="get" style="display:inline;">
+            <input type="hidden" name="categoria" value="">
+            <button type="submit">Todos</button>
+        </form>
+    </div>
+
+    <div class="manuales">
+        {% for m in manuales %}
+        <div class="manual">
+            <img src="https://via.placeholder.com/100">
+            <p><strong>{{ m.titulo }}</strong></p>
+            <p>{{ m.categoria }}</p>
+            <p>{{ m.fecha }}</p>
+        </div>
+        {% empty %}
+        <p>No se encontraron manuales.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
