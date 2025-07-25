@@ -1,0 +1,50 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Manuales Frecuentes{% endblock %}</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: sans-serif;
+            display: flex;
+            background-color: #f6f0f8;
+        }
+
+        aside {
+            width: 70px;
+            background-color: #e0d4ec;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            height: 100vh;
+        }
+
+        aside button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <aside>
+        <button title="Manuales">📘</button>
+        <button title="Tutoriales">🎥</button>
+        <button title="Fichas técnicas">⚙️</button>
+        <button title="Soporte técnico">🛠</button>
+    </aside>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
