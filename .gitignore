@@ -1,0 +1,12 @@
+# Ignorar entorno virtual
+venv/
+
+# Archivos de Python a ignorar
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Entornos y configuraciones locales
+.env
+*.log
+.DS_Store
