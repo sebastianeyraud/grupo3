@@ -1,0 +1,7 @@
+# clientes/supabase_admin.py
+from supabase import create_client
+
+SUPABASE_URL = 'https://ycvqocpgvrwkykjdunfn.supabase.co'
+SUPABASE_SERVICE_ROLE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InljdnFvY3BndnJ3a3lramR1bmZuIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MzU3MzU4OCwiZXhwIjoyMDY5MTQ5NTg4fQ.pPTK5aoxpiFu32uT_1WKdoG_4ugrHU16Pu7rG_9dzMk'
+
+supabase_admin = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
