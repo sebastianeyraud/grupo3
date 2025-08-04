@@ -12,12 +12,16 @@ def despedida():
     return '<h1>¡Hasta la próxima!</h1><p>Gracias por visitar.</p>'
 
 @app.route('/soporteTecnico')
-def info():
+def soporteTecnico():
     return render_template('soporteTecnico.html') 
 
 @app.route('/Registro')
-def info():
+def registro():
     return render_template('Registro.html') 
+
+@app.route('/recuperarContrasena')
+def recuperarContrasena():
+    return render_template('recuperarContrasena.html') 
 
 
 
