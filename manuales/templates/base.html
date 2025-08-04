@@ -1,0 +1,86 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Manuales Frecuentes{% endblock %}</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: sans-serif;
+            display: flex;
+            background-color: #f6f0f8;
+        }
+
+        aside {
+            width: 70px;
+            background-color: #e0d4ec;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            height: 100vh;
+        }
+
+        aside button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        .auth-info {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 14px;
+            background-color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-info a, .auth-info button {
+            background-color: #a183c3;
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .auth-info a:hover, .auth-info button:hover {
+            background-color: #8c6ab5;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-info">
+        {% if user.is_authenticated %}
+            Hola, {{ user.username }}
+            <a href="{% url 'logout' %}">Cerrar sesión</a>
+        {% else %}
+            <a href="{% url 'login' %}">Iniciar sesión</a>
+        {% endif %}
+    </div>
+
+    <aside>
+        <button title="Manuales">📘</button>
+        <button title="Tutoriales">🎥</button>
+        <button title="Fichas técnicas">⚙️</button>
+        <button title="Soporte técnico">🛠</button>
+    </aside>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

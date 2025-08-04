@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Catálogo{% endblock %}
+
+{% block content %}
+    <h1 style="text-align:left; font-size: 28px; margin-bottom: 20px; margin-left: 40px;">Electrodomésticos</h1>
+
+    <div style="display: flex; justify-content: flex-start; margin-bottom: 20px; margin-left: 40px;">
+        <form method="get" style="display:flex; gap:10px;">
+            <input type="text" name="q" placeholder="🔎 Búsqueda" value="{{ busqueda_actual }}" style="padding: 10px; border-radius: 10px; border: 1px solid #ccc;">
+            <button type="submit" style="padding: 10px 20px; border-radius: 10px; background: #4CAF50; color:white; border:none;">Buscar</button>
+        </form>
+    </div>
+
+    <div style="text-align: left; margin-bottom: 20px; margin-left: 40px;">
+        {% for categoria in categorias %}
+            <form method="get" style="display:inline-block; margin: 0 5px;">
+                {% if categoria != "Todos" %}
+                    <input type="hidden" name="categoria" value="{{ categoria }}">
+                {% endif %}
+                <button type="submit" style="padding:8px 12px; border-radius:20px; border:none; background-color: {% if filtro_actual == categoria %}#4CAF50{% else %}#ddd{% endif %}; color: {% if filtro_actual == categoria %}white{% else %}black{% endif %};">
+                    {{ categoria }}
+                </button>
+            </form>
+        {% endfor %}
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; padding: 0 40px;">
+        {% for m in manuales %}
+            <a href="{% url 'detalle_manual' m.id %}" style="text-decoration: none; color: inherit;">
+                <div style="background-color: white; padding: 10px; text-align: center; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.2s;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" alt="PDF" style="width: 60px; margin-bottom: 10px;">
+                    <p><strong>{{ m.titulo }}</strong></p>
+                    <p style="font-size: 12px; color: gray;">{{ m.fecha }}</p>
+                </div>
+            </a>
+        {% empty %}
+            <p style="grid-column: 1 / -1;">No se encontraron manuales.</p>
+        {% endfor %}
+    </div>
+
+    <div style="text-align:center; margin-top:20px;">
+        <span style="background:#ddd; padding:5px 10px; border-radius:10px;">1/6</span>
+    </div>
+{% endblock %}

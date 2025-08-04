@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}{{ manual.titulo }}{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        padding: 20px;
+    }
+    h1 {
+        text-align: center;
+    }
+    .descripcion, .ficha {
+        background-color: #fff;
+        padding: 15px;
+        margin: 20px auto;
+        max-width: 800px;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .botones {
+        text-align: center;
+        margin: 20px;
+    }
+    .boton {
+        display: inline-block;
+        margin: 5px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+    .boton:hover {
+        background-color: #0056b3;
+    }
+    .ficha ul {
+        list-style: none;
+        padding: 0;
+    }
+    .ficha li {
+        padding: 5px 0;
+    }
+</style>
+
+<h1>{{ manual.titulo }}</h1>
+
+<div class="descripcion">
+    <p>{{ manual.descripcion }}</p>
+</div>
+
+<div class="botones">
+    <a class="boton" href="{% url 'descargar_manual' manual.id %}" target="_blank">Ver PDF</a>
+    <a class="boton" href="{% url 'descargar_manual' manual.id %}" download>Descargar PDF</a>
+</div>
+
+<div class="ficha">
+    <h2>Ficha Técnica</h2>
+    <ul>
+        <li><strong>Categoría:</strong> {{ manual.categoria }}</li>
+        <li><strong>Fecha:</strong> {{ manual.fecha }}</li>
+        <li><strong>Peso:</strong> {{ manual.peso }}</li>
+    </ul>
+</div>
+
+<div class="botones">
+    <a class="boton" href="{% url 'catalogo' %}">← Volver al Catálogo</a>
+</div>
+{% endblock %}
