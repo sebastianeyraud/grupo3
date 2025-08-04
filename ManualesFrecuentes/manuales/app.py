@@ -15,6 +15,12 @@ def despedida():
 def info():
     return render_template('soporteTecnico.html') 
 
+@app.route('/Registro')
+def info():
+    return render_template('Registro.html') 
+
+
+
 if __name__ == '__main__':
     app.run(port=5000)
 
