@@ -39,10 +39,29 @@
             <p><strong>{{ m.titulo }}</strong></p>
             <p>{{ m.categoria }}</p>
             <p>{{ m.fecha }}</p>
+
+            <!-- Formulario para agregar comentario -->
+            <form method="post" action="/comentar/">
+                {% csrf_token %}
+                <input type="hidden" name="manual_id" value="{{ m.id }}">
+                <textarea name="comentario" placeholder="Escribe un comentario..." rows="2" cols="25"></textarea><br>
+                <button type="submit">Comentar</button>
+            </form>
+
+            <!-- Comentarios existentes -->
+            {% for c in m.comentarios %}
+                <p><em>{{ c.usuario }}:</em> {{ c.texto }}</p>
+            {% endfor %}
+        <div>
+            <p><em>{{ c.usuario }}:</em> {{ c.texto }}</p>
+
+            {% if user.is_authenticated and user.username == c.usuario %}
+                <form method="get" action="/editar_comentario/" style="display:inline;">
+                    <input type="hidden" name="comentario_id" value="{{ c.id }}">
+                    <button type="submit">Editar</button>
+                </form>
+            {% endif %}
         </div>
-        {% empty %}
-        <p>No se encontraron manuales.</p>
-        {% endfor %}
-    </div>
+    {% endfor %}
 </body>
 </html>
