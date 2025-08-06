@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Modificar Perfil</title>
+</head>
+<body>
+    <h2>Modificar Perfil</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="email">Nuevo correo:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="password">Nueva contraseña:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <button type="submit">Guardar Cambios</button>
+        <a href="{% url 'bienvenida' %}">Cancelar</a>
+    </form>
+
+    {% if mensaje %}
+        <p>{{ mensaje }}</p>
+    {% endif %}
+</body>
+</html>
