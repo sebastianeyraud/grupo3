@@ -1,0 +1,12 @@
+<h2>Editar Comentario</h2>
+<form method="POST">
+    {% csrf_token %}
+    <label>Comentario:</label><br>
+    <textarea name="comentario" rows="4" required>{{ comentario.comentario }}</textarea><br><br>
+
+    <label>Valoración:</label><br>
+    <input type="number" name="valoracion" min="1" max="5" value="{{ comentario.valoracion }}" required><br><br>
+
+    <button type="submit">Guardar Cambios</button>
+</form>
+<a href="{% url 'detalle_manual' comentario.manual_id %}">Cancelar</a>

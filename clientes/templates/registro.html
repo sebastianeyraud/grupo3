@@ -1,29 +1,217 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Crear Cuenta</title>
+    <meta charset="UTF-8">
+    <title>Registro | Sistema de Manuales Web</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* --- ESTILOS BASE (idénticos a los que tú usabas) --- */
+        :root {
+            --color-primario: #4361ee;
+            --color-secundario: #3f37c9;
+            --color-destacado: #4895ef;
+            --color-claro: #f8f9fa;
+            --color-oscuro: #212529;
+            --color-exito: #4cc9f0;
+            --color-error: #f72585;
+            --sombra: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .contenedor-registro {
+            max-width: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--sombra);
+            margin: 20px;
+            width: 100%;
+        }
+
+        .encabezado-registro {
+            background: var(--color-primario);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .encabezado-registro h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .encabezado-registro p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .formulario-registro {
+            padding: 30px;
+        }
+
+        .grupo-formulario {
+            margin-bottom: 20px;
+        }
+
+        .grupo-formulario label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--color-oscuro);
+        }
+
+        .grupo-formulario input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .grupo-formulario input:focus {
+            border-color: var(--color-destacado);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(72, 149, 239, 0.2);
+        }
+
+        .mensaje-error {
+            color: var(--color-error);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primario {
+            background: var(--color-primario);
+            color: white;
+        }
+
+        .btn-primario:hover {
+            background: var(--color-secundario);
+            transform: translateY(-2px);
+        }
+
+        .btn-enlace {
+            background: none;
+            color: var(--color-primario);
+            text-decoration: underline;
+            font-size: 0.9rem;
+        }
+
+        .btn-enlace:hover {
+            color: var(--color-secundario);
+        }
+    </style>
 </head>
 <body>
-    <h2>Crear Cuenta</h2>
 
-    {% if error %}
-        <p style="color:red">{{ error }}</p>
-    {% endif %}
-    
-    {% if mensaje %}
-        <p style="color:green">{{ mensaje }}</p>
-    {% endif %}
+    <div class="contenedor-registro">
+        <!-- 🔙 Botón para volver al inicio -->
+        <div style="text-align: left; padding: 15px;">
+            <a href="{% url 'inicio' %}" class="btn-enlace" style="font-size: 0.95rem;">← Volver al inicio</a>
+        </div>
 
-    <form method="POST">
-        {% csrf_token %}
-        <label>Correo:</label><br>
-        <input type="email" name="email" required><br>
-        <label>Contraseña:</label><br>
-        <input type="password" name="password" required><br><br>
-        <button type="submit">Crear</button>
-    </form>
+        <div class="encabezado-registro">
+            <h1>Crear una cuenta</h1>
+            <p>Ingresa tu correo y contraseña</p>
+        </div>
 
-    <br>
-    <a href="{% url 'inicio' %}">← Volver</a>
+        <!-- ✅ FORMULARIO REAL QUE ENVÍA A DJANGO -->
+        <form class="formulario-registro" method="POST" id="formularioRegistro">
+            {% csrf_token %}
+            <!-- MENSAJE DE ÉXITO -->
+            {% if mensaje %}
+                <div style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center;">
+                    {{ mensaje }}<br>
+                    <a href="{% url 'inicio' %}" style="color: #155724; text-decoration: underline;">Volver al inicio</a>
+                </div>
+            {% endif %}
+
+            <!-- MENSAJE DE ERROR -->
+            {% if error %}
+                <div style="background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; margin-bottom: 15px; text-align: center;">
+                    {{ error }}
+                </div>
+            {% endif %}
+        
+            <!-- Correo -->
+            <div class="grupo-formulario">
+                <label for="email">Correo electrónico</label>
+                <input type="email" name="email" id="email" required placeholder="Ej: usuario@dominio.com">
+                <div class="mensaje-error" id="errorEmail">Correo inválido</div>
+            </div>
+
+            <!-- Contraseña -->
+            <div class="grupo-formulario">
+                <label for="contrasena">Contraseña</label>
+                <input type="password" name="contrasena" id="contrasena" required placeholder="Mínimo 6 caracteres">
+                <div class="mensaje-error" id="errorContrasena">Contraseña débil</div>
+            </div>
+
+            <div style="text-align: center;">
+                <button type="submit" class="btn btn-primario">Registrarse</button>
+                <br><br>
+                <a href="{% url 'login' %}" class="btn-enlace">¿Ya tienes una cuenta?</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // VALIDACIÓN SUAVE antes de enviar
+        document.getElementById('formularioRegistro').addEventListener('submit', function(e) {
+            const email = document.getElementById('email');
+            const password = document.getElementById('contrasena');
+            let valido = true;
+
+            // Limpiar errores visuales
+            document.querySelectorAll('.mensaje-error').forEach(el => el.style.display = 'none');
+            email.classList.remove('input-error');
+            password.classList.remove('input-error');
+
+            const regex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+            if (!regex.test(email.value)) {
+                document.getElementById('errorEmail').style.display = 'block';
+                email.classList.add('input-error');
+                valido = false;
+            }
+
+            if (password.value.length < 6) {
+                document.getElementById('errorContrasena').style.display = 'block';
+                password.classList.add('input-error');
+                valido = false;
+            }
+
+            if (!valido) {
+                e.preventDefault();  // ❌ No enviar si está mal
+            }
+
+            // ✅ Si es válido, el formulario se envía automáticamente
+        });
+    </script>
 </body>
 </html>

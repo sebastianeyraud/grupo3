@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Soporte Técnico | Manuales Web</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #4361ee;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.1rem;
+            color: #333;
+        }
+        .botones {
+            margin-top: 30px;
+        }
+        .botones a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #4895ef;
+            color: white;
+            border-radius: 5px;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+        }
+        .botones a:hover {
+            background-color: #3f37c9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Soporte Técnico</h1>
+    <p>Debes iniciar sesión o crear una cuenta para acceder al formulario de soporte técnico.</p>
+    <div class="botones">
+        <a href="{% url 'login' %}">Iniciar Sesión</a>
+        <a href="{% url 'registro' %}">Crear Cuenta</a>
+    </div>
+    <br>
+    <a href="{% url 'inicio' %}" style="display: inline-block; margin-top: 20px; color: #4361ee;">← Volver</a>
+
+
+</body>
+</html>

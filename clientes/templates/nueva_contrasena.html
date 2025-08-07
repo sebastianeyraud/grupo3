@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Restablecer Contraseña</title>
+</head>
+<body>
+    <h2>Establecer Nueva Contraseña</h2>
+
+    {% if mensaje %}
+        <p style="color: green;">{{ mensaje }}</p>
+        <a href="{% url 'login' %}">Iniciar sesión</a>
+    {% else %}
+        {% if error %}
+            <p style="color:red">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <label>Nueva contraseña:</label><br>
+            <input type="password" name="nueva" required><br>
+            <label>Confirmar contraseña:</label><br>
+            <input type="password" name="confirmar" required><br><br>
+            <button type="submit">Guardar</button>
+        </form>
+    {% endif %}
+
+    <script>
+        // Captura el access_token desde la URL y lo inserta como campo oculto en el formulario
+        window.onload = function() {
+            const fragment = new URLSearchParams(window.location.hash.slice(1));
+            const accessToken = fragment.get("access_token");
+
+            if (accessToken) {
+                const form = document.querySelector("form");
+                const hiddenInput = document.createElement("input");
+                hiddenInput.type = "hidden";
+                hiddenInput.name = "access_token";
+                hiddenInput.value = accessToken;
+                form.appendChild(hiddenInput);
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<h2>¿Estás seguro que quieres eliminar este comentario?</h2>
+
+<p><strong>Comentario:</strong> {{ comentario.comentario }}</p>
+<p><strong>Valoración:</strong> {{ comentario.valoracion }} estrellas</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Sí, eliminar</button>
+    <a href="{% url 'detalle_manual' comentario.manual_id %}">Cancelar</a>
+</form>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar manual</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center;">Editar Manual</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <label>Título:</label>
+        <input type="text" name="titulo" value="{{ manual.titulo }}" required>
+
+        <label>Categoría:</label>
+        <input type="text" name="categoria" value="{{ manual.categoria }}" required>
+
+        <label>Descripción:</label>
+        <textarea name="descripcion" required>{{ manual.descripcion }}</textarea>
+
+        <label>Video de YouTube (URL):</label>
+        <input type="url" name="video_url" value="{{ manual.video_url }}">
+
+        <label>Manual PDF (dejar vacío para no cambiar):</label>
+        <input type="file" name="archivo" accept="application/pdf">
+
+        <label>Ficha técnica PDF (dejar vacío para no cambiar):</label>
+        <input type="file" name="ficha_tecnica" accept="application/pdf">
+
+        <button type="submit">Guardar cambios</button>
+    </form>
+
+    <a href="{% url 'detalle_manual' manual.id %}">← Volver al detalle</a>
+</body>
+</html>
