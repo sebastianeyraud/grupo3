@@ -97,8 +97,24 @@
         }
 
         .ficha-tecnica {
-            background-color: #bdc3c7;
-            cursor: not-allowed;
+            background-color: #7f8c8d;
+            text-decoration: none;
+            color: white;
+            border-radius: 6px;
+            padding: 10px 20px;
+        }
+
+
+        /* 🎥 Estilos para la sección del video */
+        .video {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .video iframe {
+            border-radius: 8px;
+            max-width: 100%;
+            height: auto;
         }
     </style>
 </head>
@@ -118,10 +134,36 @@
             <div class="botones">
                 <a href="{{ manual.url_pdf }}" target="_blank">Visualizar manual</a>
                 <a href="{{ manual.url_pdf }}" download>Descargar manual</a>
-                <button class="ficha-tecnica">Ver ficha técnica</button>
+                {% if manual.ficha_tecnica %}
+                    <a href="{{ manual.ficha_tecnica }}" target="_blank" class="botones ficha-tecnica">Ver ficha técnica</a>
+                {% else %}
+                    <span class="ficha-tecnica botones">Ficha técnica no disponible</span>
+                {% endif %}
             </div>
+            {% if es_autor %}
+                <a href="{% url 'editar_manual' manual.id %}">Editar manual</a>
+            {% endif %}
+
         </div>
     </div>
+
+    {% if manual.video_url %}
+        <div class="video">
+            <h3>Video relacionado:</h3>
+            {% if 'youtube.com' in manual.video_url or 'youtu.be' in manual.video_url %}
+                <!-- Embed de YouTube -->
+                <iframe width="560" height="315"
+                        src="https://www.youtube.com/embed/{{ manual.video_url|cut:'https://youtu.be/'|cut:'https://www.youtube.com/watch?v=' }}"
+                        title="Video relacionado"
+                        frameborder="0"
+                        allowfullscreen>
+                </iframe>
+            {% else %}
+                <!-- Link directo -->
+                <p><a href="{{ manual.video_url }}" target="_blank">Ver video</a></p>
+            {% endif %}
+        </div>
+    {% endif %}
 
     <!-- Valoración dinámica -->
     <div class="valoracion">
@@ -138,7 +180,6 @@
         {% endwith %}
     </div>
 
-
     <!-- Comentarios -->
     <div class="comentarios">
         <h3>Comentarios:</h3>
@@ -147,6 +188,15 @@
                 <strong>{{ c.usuario }}:</strong>
                 <small><em>{{ c.fecha }}</em></small>
                 <p>{{ c.comentario }}</p>
+
+                {% if usuario == c.usuario %}
+                    <a href="{% url 'editar_comentario' c.id %}" class="boton">Editar</a>
+
+                    <form method="post" action="{% url 'eliminar_comentario' c.id %}" style="display:inline;" onsubmit="return confirm('¿Estás seguro de eliminar este comentario?');">
+                        {% csrf_token %}
+                        <button type="submit">Eliminar</button>
+                    </form>
+                {% endif %}
             </div>
         {% empty %}
             <p>No hay comentarios aún.</p>

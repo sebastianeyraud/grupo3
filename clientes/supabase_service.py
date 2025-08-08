@@ -1,5 +1,6 @@
 from supabase import create_client
-import datetime
+from datetime import datetime
+
 
 # Configuración de Supabase
 SUPABASE_URL = "https://ycvqocpgvrwkykjdunfn.supabase.co"
@@ -13,7 +14,8 @@ def guardar_comentario(manual_id, usuario, comentario, valoracion):
         "usuario": usuario,
         "comentario": comentario,
         "valoracion": valoracion,
-        "fecha": datetime.datetime.now().isoformat()
+        'fecha': datetime.now().isoformat()
+
     }
     supabase.table("comentarios").insert(datos).execute()
 
@@ -47,15 +49,17 @@ def subir_pdf(nombre_archivo, archivo):
 
 
 # 📝 Guardar los datos del manual en la tabla "manuales"
-def guardar_datos_manual(titulo, categoria, descripcion, url_pdf):
-    datos = {
+def guardar_datos_manual(titulo, categoria, descripcion, url_pdf, video_url, ficha_tecnica, usuario):
+    supabase.table("manuales").insert({
         "titulo": titulo,
         "categoria": categoria,
         "descripcion": descripcion,
         "url_pdf": url_pdf,
-        "fecha_subida": datetime.datetime.now().isoformat()
-    }
-    supabase.table("manuales").insert(datos).execute()
+        "video_url": video_url,
+        "ficha_tecnica": ficha_tecnica,
+        "usuario": usuario,
+        "fecha_subida": datetime.now().isoformat(),
+    }).execute()
 
 def obtener_valoracion_promedio(manual_id):
     response = supabase.table("comentarios").select("valoracion").eq("manual_id", manual_id).execute()
@@ -63,3 +67,37 @@ def obtener_valoracion_promedio(manual_id):
     if not valoraciones:
         return 0
     return sum(valoraciones) / len(valoraciones)
+
+def guardar_mensaje_soporte(usuario, asunto, mensaje):
+    data = {
+        "usuario": usuario,
+        "asunto": asunto,
+        "mensaje": mensaje,
+        "fecha": datetime.now().isoformat()
+    }
+
+    respuesta = supabase.table("soporte_tecnico").insert(data).execute()
+    return respuesta
+
+def actualizar_manual(id, titulo, categoria, descripcion, url_pdf, video_url, ficha_tecnica):
+    supabase.table("manuales").update({
+        "titulo": titulo,
+        "categoria": categoria,
+        "descripcion": descripcion,
+        "url_pdf": url_pdf,
+        "video_url": video_url,
+        "ficha_tecnica": ficha_tecnica,
+    }).eq("id", id).execute()
+
+def obtener_comentario_por_id(comentario_id):
+    respuesta = supabase.table("comentarios").select("*").eq("id", comentario_id).single().execute()
+    return respuesta.data
+
+def actualizar_comentario(comentario_id, nuevo_texto, nueva_valoracion):
+    supabase.table("comentarios").update({
+        "comentario": nuevo_texto,
+        "valoracion": nueva_valoracion,
+    }).eq("id", comentario_id).execute()
+
+def eliminar_comentario(comentario_id):
+    supabase.table("comentarios").delete().eq("id", comentario_id).execute()
